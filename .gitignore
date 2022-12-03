@@ -39,8 +39,8 @@ postgres/
 
 public/
 
-static/products/
+static/products/*
 !static/products/.gitkeep
 
-static/uploads/
+static/uploads/*
 !static/uploads/.gitkeep
