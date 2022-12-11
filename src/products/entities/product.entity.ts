@@ -1,47 +1,90 @@
 import { BeforeInsert, BeforeUpdate, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { ProductImage } from "./product-image.entity";
 import { User } from '../../auth/entities/user.entity';
+import { ApiProperty } from "@nestjs/swagger";
 
 @Entity({ name: 'products' })
 export class Product {
 
+  @ApiProperty({
+    example: '4a21ebf0-aafa-42ed-8e2d-39366fedc397',
+    description: 'Product id.',
+    uniqueItems: true
+  })
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @ApiProperty({
+    example: 'T-Shirt',
+    description: 'Product title',
+    uniqueItems: true
+  })
   @Column('text', {
     unique: true
   })
   title: string;
 
+  @ApiProperty({
+    example: 20.00,
+    description: 'Product price',
+    default: 0
+  })
   @Column('float', {
     default: 0
   })
   price: number;
   
+  @ApiProperty({
+    example: 'Description',
+    description: 'Product description'
+  })
   @Column({
     type: 'text',
     nullable: true
   })
   description: string;
 
+  @ApiProperty({
+    example: 't_shirt',
+    description: 'Product slug',
+    uniqueItems: true
+  })
   @Column('text', {
     unique: true
   })
   slug: string;
 
+  @ApiProperty({
+    example: 10,
+    description: 'Product stock',
+    default: 0
+  })
   @Column('int', {
     default: 0
   })
   stock: number;
 
+  @ApiProperty({
+    example: ['l', 'xl'],
+    description: 'Product sizes'
+  })
   @Column('text', {
     array: true
   })
   sizes: string[];
 
+  @ApiProperty({
+    example: 'women',
+    description: 'Product gender'
+  })
   @Column('text')
   gender: string;
 
+  @ApiProperty({
+    example: ['tag1', 'tag2'],
+    description: 'Product sizes',
+    default: []
+  })
   @Column({
     type: 'text',
     array: true,
@@ -49,6 +92,7 @@ export class Product {
   })
   tags: string[];
 
+  @ApiProperty()
   @OneToMany(
     () => ProductImage,
     productImage => productImage.product,
