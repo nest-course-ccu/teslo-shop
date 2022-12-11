@@ -1,13 +1,20 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Product } from '../../products/entities/product.entity';
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({ name: 'users' })
 export class User {
-
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column('text', {
-    unique: true
+    unique: true,
   })
   email: string;
 
@@ -18,15 +25,21 @@ export class User {
   fullname: string;
 
   @Column('bool', {
-    default: true
+    default: true,
   })
   isActive: boolean;
 
   @Column('text', {
     array: true,
-    default: ['user']
+    default: ['user'],
   })
   roles: string[];
+
+  @OneToMany(
+    () => Product,
+    (product) => product.user
+  )
+  product: Product;
 
   @BeforeInsert()
   checkFieldsBeforeInsert() {
